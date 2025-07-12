@@ -81,11 +81,14 @@ export default function Page() {
     setLoading(true);
     setMessage("");
     try {
-      const res = await fetch("http://localhost:5000/api/events", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+      const res = await fetch(
+        import.meta.env.VITE_API_URL_DEVLOPMENT + "/api/events",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        }
+      );
       const data = await res.json();
       console.log("API response:", data);
       setMessage("Event submitted successfully!");

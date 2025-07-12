@@ -61,6 +61,7 @@ export default function TradingChart() {
   useEffect(() => {
     const fetchEvents = async () => {
       setLoading(true);
+      console.log(import.meta.env.VITE_API_URL_DEVLOPMENT);
       const year = currentDate.getFullYear();
       const month = currentDate.getMonth();
       const startDate = `${year}-${String(month + 1).padStart(2, "0")}-01`;
@@ -69,7 +70,7 @@ export default function TradingChart() {
         2,
         "0"
       )}-${String(endDate.getDate()).padStart(2, "0")}`;
-      let url = `http://localhost:5000/api/events?startDate=${startDate}&endDate=${endDateStr}`;
+      let url = `${import.meta.env.VITE_API_URL_DEVLOPMENT}/api/events?startDate=${startDate}&endDate=${endDateStr}`;
       if (selectedCountries.length > 0)
         url += `&country=${selectedCountries.join(",")}`;
       if (selectedImpact !== "all") url += `&impact=${selectedImpact}`;
@@ -78,6 +79,7 @@ export default function TradingChart() {
         const data = await res.json();
         setEvents(Array.isArray(data) ? data : []);
       } catch (e) {
+        console.log(e);
         setEvents([]);
       } finally {
         setLoading(false);
